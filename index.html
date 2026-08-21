@@ -1,811 +1,729 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Backcountry Archery Mule Deer Training Plan (Revised)</title>
-<style>
-  * { box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Calibri, Arial, sans-serif; font-size: 16px; line-height: 1.5; margin: 0; padding: 16px; color: #222; max-width: 900px; margin: 0 auto; }
-  h1 { font-size: 1.5rem; border-bottom: 2px solid #333; padding-bottom: 6px; margin-top: 0; }
-  h2 { font-size: 1.25rem; border-bottom: 1px solid #999; padding-bottom: 4px; margin-top: 32px; }
-  h3 { font-size: 1.1rem; margin-top: 20px; }
-  table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 0.875rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  th, td { border: 1px solid #999; padding: 8px 10px; text-align: left; vertical-align: top; white-space: nowrap; }
-  td:last-child, th:last-child { white-space: normal; }
-  th { background-color: #e8e8e8; font-weight: bold; position: sticky; top: 0; }
-  tr:nth-child(even) { background-color: #f5f5f5; }
-  .subtitle { font-size: 0.875rem; color: #555; margin-top: -10px; margin-bottom: 20px; }
-  .note { background-color: #f9f9e8; border-left: 4px solid #cc9900; padding: 12px 16px; margin: 16px 0; font-size: 0.875rem; border-radius: 4px; }
-  .warning { background-color: #fde8e8; border-left: 4px solid #cc0000; padding: 12px 16px; margin: 16px 0; font-size: 0.875rem; border-radius: 4px; }
-  .checklist { list-style: none; padding-left: 0; }
-  .checklist li { padding: 8px 0; padding-left: 36px; position: relative; border-bottom: 1px solid #eee; }
-  .checklist li:last-child { border-bottom: none; }
-  .checklist li input[type="checkbox"] { position: absolute; left: 0; top: 8px; width: 22px; height: 22px; cursor: pointer; }
-  .cb { text-align: center; white-space: nowrap; }
-  .cb input[type="checkbox"] { width: 24px; height: 24px; cursor: pointer; }
-  .status-bar { position: sticky; top: 0; background: #2c5f2d; color: white; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; font-size: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border-radius: 0 0 8px 8px; margin: -16px -16px 16px -16px; width: calc(100% + 32px); }
-  .status-bar .status { font-style: italic; opacity: 0.9; }
-  .progress { font-weight: bold; }
-
-  /* Mobile responsive */
-  @media (max-width: 600px) {
-    body { padding: 12px; font-size: 15px; }
-    h1 { font-size: 1.3rem; }
-    h2 { font-size: 1.15rem; }
-    th, td { padding: 6px 8px; font-size: 0.8rem; }
-    .status-bar { margin: -12px -12px 12px -12px; width: calc(100% + 24px); }
-  }
-
-  @media print { 
-    body { margin: 0.5in; padding: 0; } 
-    h2 { page-break-after: avoid; } 
-    table { page-break-inside: avoid; display: table; } 
-    .status-bar { display: none; }
-  }
-  .page-break { page-break-before: always; }
-
-  /* Config modal styles */
-  .config-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-  }
-  .config-overlay.visible { display: flex; }
-  .config-modal {
-    background: white;
-    border-radius: 8px;
-    padding: 24px;
-    max-width: 420px;
-    width: 90%;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  }
-  .config-modal h3 {
-    margin: 0 0 16px 0;
-    font-size: 1.1rem;
-    color: #2c5f2d;
-  }
-  .config-modal label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: #555;
-    margin-bottom: 4px;
-    margin-top: 12px;
-  }
-  .config-modal label:first-of-type { margin-top: 0; }
-  .config-modal input[type="text"],
-  .config-modal input[type="password"] {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    font-family: inherit;
-  }
-  .config-modal input:focus {
-    outline: none;
-    border-color: #2c5f2d;
-    box-shadow: 0 0 0 2px rgba(44,95,45,0.15);
-  }
-  .config-btn-row {
-    margin-top: 20px;
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
-  }
-  .config-btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    font-family: inherit;
-  }
-  .config-btn-primary {
-    background: #2c5f2d;
-    color: white;
-  }
-  .config-btn-primary:hover { background: #1e4620; }
-  .config-btn-secondary {
-    background: #eee;
-    color: #333;
-  }
-  .config-btn-secondary:hover { background: #ddd; }
-  .config-btn-test {
-    background: #f0f7f0;
-    color: #2c5f2d;
-    border: 1px solid #2c5f2d;
-  }
-  .config-btn-test:hover { background: #e0f0e0; }
-  .config-test-result {
-    margin-top: 8px;
-    font-size: 0.8rem;
-    padding: 6px 10px;
-    border-radius: 4px;
-    display: none;
-  }
-  .config-test-result.success { display: block; background: #e8f5e9; color: #2e7d32; }
-  .config-test-result.error { display: block; background: #fde8e8; color: #c62828; }
-  .settings-link {
-    cursor: pointer;
-    opacity: 0.8;
-    font-size: 0.75rem;
-    margin-left: 12px;
-  }
-  .settings-link:hover { opacity: 1; }
-  .offline-banner {
-    display: none;
-    background: #fff3cd;
-    color: #856404;
-    padding: 6px 12px;
-    font-size: 0.75rem;
-    text-align: center;
-    border-bottom: 1px solid #ffc107;
-  }
-  .offline-banner.visible { display: block; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Plan — Sep 2027 Backcountry Hunt</title>
+    <style>
+        :root {
+            --bg: #1a1a2e;
+            --surface: #16213e;
+            --surface-2: #0f3460;
+            --accent: #e94560;
+            --accent-dim: #a83249;
+            --text: #eaeaea;
+            --text-dim: #a0a0a0;
+            --success: #4ecdc4;
+            --warning: #f39c12;
+            --zone1: #3498db;
+            --zone2: #2ecc71;
+            --zone3: #f39c12;
+            --zone4: #e74c3c;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        h2 {
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.75rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid var(--surface-2);
+            color: var(--success);
+        }
+        h3 {
+            font-size: 1rem;
+            margin: 1rem 0 0.5rem;
+            color: var(--text);
+        }
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .phase {
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--surface-2);
+        }
+        .phase.transition { border-left-color: #9b59b6; }
+        .phase.base1 { border-left-color: var(--zone1); }
+        .phase.base2 { border-left-color: var(--zone2); }
+        .phase.race { border-left-color: var(--warning); }
+        .phase.base3 { border-left-color: var(--zone1); }
+        .phase.specific1 { border-left-color: var(--zone3); }
+        .phase.specific2 { border-left-color: var(--zone4); }
+        .phase.taper { border-left-color: var(--success); }
+        .phase.hunt { border-left-color: var(--accent); }
+        .week-header {
+            font-weight: 600;
+            margin: 0.75rem 0 0.25rem;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        .day-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 4px 0;
+            gap: 8px;
+            font-size: 0.88rem;
+        }
+        .day-row input[type="checkbox"] {
+            margin-top: 4px;
+            accent-color: var(--success);
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+        .day-row label {
+            flex: 1;
+            cursor: pointer;
+        }
+        .day-row label.checked {
+            text-decoration: line-through;
+            color: var(--text-dim);
+        }
+        .day-label {
+            font-weight: 600;
+            display: inline-block;
+            width: 36px;
+            color: var(--text-dim);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0;
+            font-size: 0.85rem;
+        }
+        th, td {
+            padding: 6px 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--surface-2);
+        }
+        th {
+            color: var(--text-dim);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        .progress-bar {
+            background: var(--surface);
+            border-radius: 12px;
+            height: 24px;
+            overflow: hidden;
+            margin: 1rem 0;
+            position: relative;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--accent));
+            border-radius: 12px;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .sync-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--surface);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+        }
+        .sync-status { color: var(--text-dim); }
+        .sync-btn {
+            background: var(--surface-2);
+            color: var(--text);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .sync-btn:hover { background: var(--accent-dim); }
+        .note {
+            background: var(--surface-2);
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin: 0.5rem 0;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+        .note strong { color: var(--warning); }
+        .benchmark-table td:first-child { font-weight: 600; }
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+        }
+        .collapsible::before {
+            content: '▸ ';
+            display: inline;
+        }
+        .collapsible.open::before {
+            content: '▾ ';
+        }
+        .collapsible-content {
+            display: none;
+            padding-left: 0;
+        }
+        .collapsible-content.open {
+            display: block;
+        }
+        @media (max-width: 600px) {
+            body { padding: 12px; }
+            .day-label { width: 30px; }
+        }
+    </style>
 </head>
 <body>
+    <h1>Backcountry Archery Hunt — Sep 2027</h1>
+    <p class="subtitle">Annual periodized plan • Training for the New Alpinism / Uphill Athlete methodology<br>
+    9-day hunt • 6000-8000ft • 60lb pack-in • 90-110lb pack-out</p>
 
-<div class="offline-banner" id="offline-banner">
-  &#9888; Offline mode: changes saved locally. Connect to GitHub to sync.
-</div>
-
-<div class="status-bar">
-  <span class="progress" id="progress-text">Loading...</span>
-  <span>
-    <span class="status" id="save-status"></span>
-    <span class="settings-link" id="settings-btn" title="GitHub sync settings">&#9881; Settings</span>
-  </span>
-</div>
-
-<div class="config-overlay" id="config-overlay">
-  <div class="config-modal">
-    <h3>&#9881; GitHub Sync Settings</h3>
-    <label for="cfg-owner">Repository Owner</label>
-    <input type="text" id="cfg-owner" placeholder="your-github-username">
-    <label for="cfg-repo">Repository Name</label>
-    <input type="text" id="cfg-repo" placeholder="hunt-training-plan">
-    <label for="cfg-branch">Branch</label>
-    <input type="text" id="cfg-branch" placeholder="main" value="main">
-    <label for="cfg-pat">Personal Access Token</label>
-    <input type="password" id="cfg-pat" placeholder="github_pat_...">
-    <div class="config-test-result" id="config-test-result"></div>
-    <div class="config-btn-row">
-      <button class="config-btn config-btn-test" id="btn-test">Test Connection</button>
-      <button class="config-btn config-btn-secondary" id="btn-cancel">Cancel</button>
-      <button class="config-btn config-btn-primary" id="btn-save-config">Save</button>
+    <div class="sync-bar">
+        <span class="sync-status" id="syncStatus">Not synced</span>
+        <button class="sync-btn" onclick="setupSync()">Setup Sync</button>
     </div>
-  </div>
-</div>
 
-<h1>Backcountry Archery Mule Deer Training Plan (Revised)</h1>
-<p class="subtitle">5-Week Accelerated Plan<br>
-Adapted from <em>Training for the New Alpinism</em><br>
-<strong>Revision reason:</strong> Illness knocked out Weeks 3-4 (Base phase). Bridge fitness retained. Rebuilding from current date.</p>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        <span class="progress-text" id="progressText">0%</span>
+    </div>
 
-<div class="warning">
-<strong>Context:</strong> This plan compresses 7 weeks of training into 5. You will arrive with less eccentric conditioning than originally planned. The hunt-day safety adjustments at the end of this document are mandatory, not optional.
-</div>
+    <!-- ===== TRANSITION ===== -->
+    <div class="phase transition">
+        <h2 class="collapsible" onclick="toggleSection(this)">Transition (Weeks 1-4: Sep 15 – Oct 12)</h2>
+        <div class="collapsible-content">
+        <p class="note">Recover from 2026 hunt. Address knee. Reset mentally. Maintain movement only.</p>
 
-<h2>Hunt Demands (unchanged)</h2>
-<table>
-  <tr><th>Demand</th><th>Details</th></tr>
-  <tr><td>Pack-in</td><td>~50 lbs, long approach with significant elevation gain</td></tr>
-  <tr><td>Pack-out (load 1)</td><td>~70 lbs max (gear + meat). See safety adjustments.</td></tr>
-  <tr><td>Pack-out (load 2)</td><td>~50-70 lbs meat + remaining gear</td></tr>
-  <tr><td>Pack-out (load 3)</td><td>~30-40 lbs remainder (if needed)</td></tr>
-  <tr><td>Duration</td><td>6 days in the field at high elevation</td></tr>
-  <tr><td>Key stress</td><td>Eccentric loading on long steep descent under load</td></tr>
-</table>
+        <h3 class="week-header">Week 1 (Sep 15-21)</h3>
+        <div class="day-row"><input type="checkbox" id="cb0"><label for="cb0"><span class="day-label">Mon</span> Rest — post-hunt recovery</label></div>
+        <div class="day-row"><input type="checkbox" id="cb1"><label for="cb1"><span class="day-label">Tue</span> Easy walk, 30 min, Zone 1. Mobility session: hips, ankles, quads.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb2"><label for="cb2"><span class="day-label">Wed</span> Rest</label></div>
+        <div class="day-row"><input type="checkbox" id="cb3"><label for="cb3"><span class="day-label">Thu</span> Easy walk, 40 min. Foam roll. TKE 3x15.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb4"><label for="cb4"><span class="day-label">Sat</span> Easy hike, 45-60 min, unweighted, Zone 1. Enjoy being outside without a pack.</label></div>
 
-<h2>Revised Periodization</h2>
-<table>
-  <tr><th>Phase</th><th>Week</th><th>Focus</th></tr>
-  <tr><td>Re-entry Weekend</td><td>4 (partial)</td><td>Validate fitness held, bank sessions</td></tr>
-  <tr><td>Compressed Base</td><td>5</td><td>Rebuild aerobic volume + load tolerance rapidly</td></tr>
-  <tr><td>Base &rarr; Specific</td><td>6</td><td>Heavy carries, steep terrain, first simulation</td></tr>
-  <tr><td>Peak Specific</td><td>7</td><td>Dress rehearsal, max load, hunt simulation</td></tr>
-  <tr><td>Taper</td><td>8</td><td>Volume drops 40-50%, maintain intensity</td></tr>
-  <tr><td>Hunt Week</td><td>9</td><td>Rest, final bow practice, pack-in</td></tr>
-</table>
+        <h3 class="week-header">Week 2 (Sep 22-28)</h3>
+        <div class="day-row"><input type="checkbox" id="cb5"><label for="cb5"><span class="day-label">Mon</span> General strength: BW squats 3x12, hip hinges 3x12, pushups 3x10, dead bugs 3x12</label></div>
+        <div class="day-row"><input type="checkbox" id="cb6"><label for="cb6"><span class="day-label">Tue</span> Easy hike, 45 min, Zone 1</label></div>
+        <div class="day-row"><input type="checkbox" id="cb7"><label for="cb7"><span class="day-label">Thu</span> General strength: lunges 3x10/leg, glute bridges 3x15, rows 3x10, plank 3x30s</label></div>
+        <div class="day-row"><input type="checkbox" id="cb8"><label for="cb8"><span class="day-label">Sat</span> Easy hike, 60 min, Zone 1. Some hills OK.</label></div>
 
-<h2>Weekly Volume Targets</h2>
-<table>
-  <tr><th>Week</th><th>Training Hours (excludes daily walks)</th></tr>
-  <tr><td>4 (partial)</td><td>3-4 hrs</td></tr>
-  <tr><td>5</td><td>7 hrs</td></tr>
-  <tr><td>6</td><td>8-9 hrs</td></tr>
-  <tr><td>7</td><td>9-10 hrs (peak)</td></tr>
-  <tr><td>8</td><td>6 hrs</td></tr>
-  <tr><td>9</td><td>2-3 hrs (taper into hunt)</td></tr>
-</table>
-<p>Daily walks (~60-90 min/day) continue throughout as aerobic base. Don't cut them.</p>
+        <h3 class="week-header">Week 3 (Sep 29 – Oct 5)</h3>
+        <div class="day-row"><input type="checkbox" id="cb9"><label for="cb9"><span class="day-label">Mon</span> General strength: goblet squats 3x10, RDL 3x10, pushups 3x12, TKE 3x15</label></div>
+        <div class="day-row"><input type="checkbox" id="cb10"><label for="cb10"><span class="day-label">Tue</span> Hike, 50-60 min, Zone 1-2, seek hills</label></div>
+        <div class="day-row"><input type="checkbox" id="cb11"><label for="cb11"><span class="day-label">Thu</span> General strength: split squats 3x8/leg, single-leg deadlift 3x8/leg, rows 3x10, pallof press 3x10/side</label></div>
+        <div class="day-row"><input type="checkbox" id="cb12"><label for="cb12"><span class="day-label">Sat</span> Hike, 75 min, Zone 1-2, moderate terrain</label></div>
 
-<h2>Re-entry Weekend</h2>
-<p><strong>Status:</strong> Friday &mdash; 45 min weighted hike, 35 lbs, moderate terrain. Felt easy. &#10003;</p>
-<table>
-  <tr><th>Day</th><th>Session</th><th>Details</th><th>&#10003;</th></tr>
-  <tr><td>Fri</td><td>Weighted hike</td><td>45 min, 35 lbs, moderate terrain</td><td class="cb"><input type="checkbox" checked></td></tr>
-  <tr><td>Sat</td><td>Long hike</td><td>2.5-3 hrs, 30-35 lbs, find hills. Hunt boots on.</td><td class="cb"><input type="checkbox" checked></td></tr>
-  <tr><td>Sun</td><td>Active recovery</td><td>Easy walk + full mobility session. Foam roll, hip flexors, ankles.</td><td class="cb"><input type="checkbox" checked></td></tr>
-</table>
-<div class="note">
-<strong>Decision gate:</strong> If Saturday's hike produces unusual joint pain, excessive DOMS, or any illness relapse, drop Week 5 loads by 5 lbs and add an extra rest day Wednesday.
-</div>
+        <h3 class="week-header">Week 4 (Oct 6-12)</h3>
+        <div class="day-row"><input type="checkbox" id="cb13"><label for="cb13"><span class="day-label">Mon</span> General strength: goblet squats 3x10, RDL 3x10, step-ups (12" box, BW) 3x10/leg, core</label></div>
+        <div class="day-row"><input type="checkbox" id="cb14"><label for="cb14"><span class="day-label">Tue</span> Hike, 60 min, Zone 2, hills</label></div>
+        <div class="day-row"><input type="checkbox" id="cb15"><label for="cb15"><span class="day-label">Thu</span> General strength: Bulgarian split squat 3x8/leg, single-leg DL 3x8/leg, farmer carry 3x40m, plank 3x40s</label></div>
+        <div class="day-row"><input type="checkbox" id="cb16"><label for="cb16"><span class="day-label">Sat</span> Hike, 90 min, Zone 1-2, longer effort. Baseline feel-check.</label></div>
 
-<h2>Week 5: Compressed Base</h2>
-<p><strong>Goal:</strong> Rebuild aerobic volume and structural resilience in one week. Zone 1-2 dominates.<br>
-<strong>Load:</strong> 35-40 lbs. Full-set strength work. Eccentric progression restarts at 18" box.</p>
-<table>
-  <tr><th>Day</th><th>Session</th><th>Details</th><th>&#10003;</th></tr>
-  <tr><td>Mon</td><td>Strength A (full)</td><td>3x8-10. Eccentric step-downs: 3x12/leg, +10 lbs, 18" box</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Tue</td><td>Weighted uphill</td><td>60-75 min, 35 lbs, steepest available, Zone 2</td><td class="cb"><input type="checkbox" checked></td></tr>
-  <tr><td>Wed</td><td>Strength B</td><td>Full sets. Farmer carries heavy.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Thu</td><td>Weighted hike</td><td>75-90 min, 35-40 lbs, seek downhill sections. Poles.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Fri</td><td>Rest</td><td></td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Sat</td><td>Long hike</td><td>3-3.5 hrs, 40 lbs, 1,500+ ft gain. Hunt boots. Practice descent with poles.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Sun</td><td>Active recovery</td><td>Easy walk, stretching, foam roll</td><td class="cb"><input type="checkbox"></td></tr>
-</table>
+        <div class="note"><strong>Knee protocol (daily through Base 1):</strong> TKE with band 3x15, Spanish squats 2x30s, wall sits at 70° 2x30s. If knee pain persists past Week 8, get assessed.</div>
+        </div>
+    </div>
 
-<h2>Week 6: Base &rarr; Specific Transition</h2>
-<p><strong>Goal:</strong> Push loads to hunt weight. First simulation. Introduce downhill emphasis.<br>
-<strong>Load:</strong> 40-50 lbs weekdays. Saturday simulation: 40-45 in / 55 out.</p>
-<table>
-  <tr><th>Day</th><th>Session</th><th>Details</th><th>&#10003;</th></tr>
-  <tr><td>Mon</td><td>Strength A</td><td>3x8-10. Eccentric step-downs: 3x15/leg, +15-20 lbs, 18" box</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Tue</td><td>Weighted uphill intervals</td><td>60 min, 40-45 lbs, steepest hill. Hard up (Z3-4), controlled down.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Wed</td><td>Strength B + eccentrics</td><td>Maintain lifts + 4x15 eccentric step-downs. Add farmer carries.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Thu</td><td>Weighted hike w/ descent</td><td>90 min, 45-50 lbs. Find 1,000+ ft descent. Slow, controlled, poles.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Fri</td><td>Rest</td><td></td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Sat</td><td>Mini-simulation</td><td>5-6 miles, 40-45 lbs, 1,500+ ft gain. Set up camp at top. Add water/sandbag to 55 lbs for descent. Practice heavy downhill.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Sun</td><td>Active recovery</td><td></td><td class="cb"><input type="checkbox"></td></tr>
-</table>
+    <!-- ===== BASE 1 ===== -->
+    <div class="phase base1">
+        <h2 class="collapsible" onclick="toggleSection(this)">Base 1: Aerobic + General Strength (Weeks 5-14: Oct 13 – Dec 21)</h2>
+        <div class="collapsible-content">
+        <p class="note">Build aerobic engine. Establish strength patterns. 80% Zone 1-2. Retest AeT at Week 10.<br><strong>Volume:</strong> 4 hrs/wk → 7 hrs/wk. Step-back every 4th week.</p>
 
-<h2>Week 7: Peak Specific</h2>
-<p><strong>Goal:</strong> Simulate hunt demands at maximum safe load. Dress rehearsal. Bow under fatigue.<br>
-<strong>Load:</strong> 50 lbs weekdays. Saturday: 50 in / 70-80 out (dress rehearsal).</p>
-<table>
-  <tr><th>Day</th><th>Session</th><th>Details</th><th>&#10003;</th></tr>
-  <tr><td>Mon</td><td>Strength A (maintain)</td><td>2x8, peak weight. Eccentric step-downs: 4x15/leg, +20-25 lbs, 24" box</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Tue</td><td>Weighted uphill intervals</td><td>50-60 min, 50 lbs, steepest hill. Hard up (Z3-4), controlled down.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Wed</td><td>Strength B + bow under fatigue</td><td>Maintain lifts. Then: 20-30 min hard effort &rarr; shoot 10-15 arrows at 30-50 yds.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Thu</td><td>Weighted descent focus</td><td>90 min, 50 lbs. Seek 1,000+ ft descent. Poles mandatory. Slow controlled steps.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Fri</td><td>Rest</td><td></td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Sat</td><td><strong>Dress rehearsal</strong></td><td>Actual gear, 50 lbs in (6-8 miles, 2,000+ ft gain). Camp overnight. Morning: load 70-80 lbs, hike 3-4 miles out downhill.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Sun</td><td>Active recovery</td><td></td><td class="cb"><input type="checkbox"></td></tr>
-</table>
+        <h3 class="week-header">Week 5 — AeT Baseline Test</h3>
+        <div class="day-row"><input type="checkbox" id="cb17"><label for="cb17"><span class="day-label">Mon</span> Strength A: Goblet squat 3x8, RDL 3x10, Bulgarian split squat 3x8/leg, step-ups 3x10/leg (18" BW), eccentric step-down 2x10/leg (12" BW, 4-count), KB swing 3x12</label></div>
+        <div class="day-row"><input type="checkbox" id="cb18"><label for="cb18"><span class="day-label">Tue</span> Uphill hike, 60 min, Zone 2, neighborhood hills</label></div>
+        <div class="day-row"><input type="checkbox" id="cb19"><label for="cb19"><span class="day-label">Wed</span> Strength B: Rows 3x10, floor press 3x8, farmer carry 3x60m, single-leg DL 3x8/leg, dead bugs 3x12, side plank 3x30s/side</label></div>
+        <div class="day-row"><input type="checkbox" id="cb20"><label for="cb20"><span class="day-label">Thu</span> Easy hike, 45-60 min, Zone 1-2</label></div>
+        <div class="day-row"><input type="checkbox" id="cb21"><label for="cb21"><span class="day-label">Sat</span> <strong>AeT TEST:</strong> 15 min warmup → 60 min steady effort on flat/consistent surface. Note avg HR first half vs second half. &lt;5% drift = below AeT.</label></div>
 
-<div class="note">
-<strong>Dress rehearsal note:</strong> Original plan called for 100 lbs pack-out. Reduced to 70-80 lbs due to compressed eccentric conditioning. This still validates gear fit, quad endurance, and technique. Hunt-day pack-out strategy accounts for the gap (see safety adjustments below).
-</div>
+        <h3 class="week-header">Weeks 6-8 (Oct 20 – Nov 9): Build</h3>
+        <div class="day-row"><input type="checkbox" id="cb22"><label for="cb22"><span class="day-label">Wk6</span> Strength 3x/wk + Aerobic 3x/wk (60-75 min sessions). Total ~5 hrs. Add 5 lbs to all lifts.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb23"><label for="cb23"><span class="day-label">Wk7</span> Same structure. Sat long hike extends to 2 hrs. Total ~5.5 hrs.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb24"><label for="cb24"><span class="day-label">Wk8</span> <strong>STEP-BACK:</strong> Drop to 90% volume. Reduce one session. Total ~4.5 hrs. Keep strength loads.</label></div>
 
-<h3>Downhill Emphasis (Weeks 6-7)</h3>
-<ul>
-  <li>Find steep descents (1,000+ ft) with 50-70 lbs</li>
-  <li>Slow, controlled steps. No bombing down.</li>
-  <li>Trekking poles mandatory. Practice technique under load.</li>
-  <li>Build eccentric tolerance toward 70-80 lbs on descent</li>
-</ul>
+        <h3 class="week-header">Weeks 9-11 (Nov 10 – Nov 30): Build</h3>
+        <div class="day-row"><input type="checkbox" id="cb25"><label for="cb25"><span class="day-label">Wk9</span> Strength 3x/wk + Aerobic 3-4x/wk. Sat long hike 2-2.5 hrs. Total ~6 hrs.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb26"><label for="cb26"><span class="day-label">Wk10</span> <strong>AeT RETEST.</strong> Same protocol as Week 5. Compare drift. Should see improvement. Total ~6.5 hrs.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb27"><label for="cb27"><span class="day-label">Wk11</span> Add ski-specific conditioning 1x/wk (lateral lunges, SL box jumps, agility). Total ~6.5 hrs.</label></div>
 
-<h2>Week 8: Taper</h2>
-<p><strong>Goal:</strong> Arrive at the trailhead fresh, strong, and sharp. Volume drops 40-50%. Intensity maintained.</p>
-<table>
-  <tr><th>Day</th><th>Session</th><th>Details</th><th>&#10003;</th></tr>
-  <tr><td>Mon</td><td>Strength (light)</td><td>2x6, 70% of peak weight. Keep eccentric step-downs: 2x10/leg.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Tue</td><td>Weighted hike</td><td>60 min, 40 lbs, moderate terrain</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Wed</td><td>Rest</td><td></td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Thu</td><td>Uphill intervals</td><td>45 min, 40 lbs, stay sharp</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Fri</td><td>Rest</td><td></td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Sat</td><td>Hike (stay loose)</td><td>2 hrs, 30 lbs. Light and easy.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Sun</td><td>Rest</td><td></td><td class="cb"><input type="checkbox"></td></tr>
-</table>
+        <h3 class="week-header">Week 12 (Dec 1-7): Step-Back</h3>
+        <div class="day-row"><input type="checkbox" id="cb28"><label for="cb28"><span class="day-label">Wk12</span> <strong>STEP-BACK:</strong> Drop to 85% volume. Maintain loads but reduce sets (2x instead of 3x). Total ~5.5 hrs.</label></div>
 
-<h2>Week 9: Hunt Week</h2>
-<table>
-  <tr><th>Day</th><th>Session</th><th>Details</th><th>&#10003;</th></tr>
-  <tr><td>Mon</td><td>Rest</td><td>Final gear check. Pack organized.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Tue</td><td>Easy 30 min walk</td><td>Stay loose. Don't sit all day.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Wed</td><td>Bow practice</td><td>Shoot fresh. 20-30 arrows. Confirm zero.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Thu</td><td>Rest / travel</td><td>Drive to trailhead area.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Fri</td><td>Pack-in or final rest</td><td>Full pack, long approach with significant elevation gain. Or rest and pack-in Sat AM.</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Sat+</td><td>Hunt</td><td></td><td class="cb"><input type="checkbox"></td></tr>
-</table>
+        <h3 class="week-header">Weeks 13-14 (Dec 8-21): Build to Phase Transition</h3>
+        <div class="day-row"><input type="checkbox" id="cb29"><label for="cb29"><span class="day-label">Wk13</span> Strength shifts to 2x/wk (preparing for max strength). Aerobic 4x/wk. Sat long hike 2.5-3 hrs. Total ~7 hrs.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb30"><label for="cb30"><span class="day-label">Wk14</span> Same. Saturday: 3 hr hike on longest available terrain. Validate aerobic base before max strength phase.</label></div>
 
-<h2>Load Progression (Revised)</h2>
-<table>
-  <tr><th>Week</th><th>Weekday Hikes</th><th>Saturday Long Effort</th></tr>
-  <tr><td>4 (re-entry)</td><td>30-35 lbs</td><td>30-35 lbs</td></tr>
-  <tr><td>5</td><td>35-40 lbs</td><td>40 lbs</td></tr>
-  <tr><td>6</td><td>40-50 lbs</td><td>45 in / 55 out</td></tr>
-  <tr><td>7</td><td>50 lbs</td><td>50 in / 70-80 out (dress rehearsal)</td></tr>
-  <tr><td>8</td><td>40 lbs</td><td>30 lbs</td></tr>
-  <tr><td>9</td><td>None</td><td>Hunt</td></tr>
-</table>
+        <div class="note"><strong>Decision Gate (Week 14):</strong> AeT should be 5-10 bpm higher than Week 5. If not, extend Base 1 by 2-4 weeks before moving to max strength. Do NOT rush this.</div>
 
-<h2>Eccentric Progression (Revised)</h2>
-<table>
-  <tr><th>Week</th><th>Eccentric Step-Downs</th><th>Loaded Descents</th></tr>
-  <tr><td>4 (re-entry)</td><td>2x10/leg, bodyweight, 12" box</td><td>Seek downhill on hikes</td></tr>
-  <tr><td>5</td><td>3x12/leg, +10 lbs, 18" box</td><td>Downhill on Saturday hike (40 lbs)</td></tr>
-  <tr><td>6</td><td>3-4x15/leg, +15-20 lbs, 18" box</td><td>Dedicated: 1,000+ ft descent with 45-55 lbs</td></tr>
-  <tr><td>7</td><td>4x15/leg, +20-25 lbs, 24" box</td><td>Dedicated: 1,000+ ft descent with 50 lbs. Dress rehearsal: 70-80 lbs descent.</td></tr>
-  <tr><td>8</td><td>2x10/leg (maintain)</td><td>Light downhill only</td></tr>
-</table>
+        <h3>Strength A Template (Base 1)</h3>
+        <table>
+            <tr><th>Exercise</th><th>Sets x Reps</th><th>Notes</th></tr>
+            <tr><td>Goblet/DB front squat</td><td>3x8-10</td><td>Below parallel. Add 5 lbs/session.</td></tr>
+            <tr><td>Romanian deadlift (DB)</td><td>3x10</td><td>Linear progression</td></tr>
+            <tr><td>Bulgarian split squat</td><td>3x8/leg</td><td>Add load weekly</td></tr>
+            <tr><td>Step-ups (18" box, weighted)</td><td>3x10/leg</td><td>Build to 40lb DBs</td></tr>
+            <tr><td>Eccentric step-downs (12" box)</td><td>2-3x10/leg</td><td>4-count lowering. Bodyweight → +10 lbs by end.</td></tr>
+            <tr><td>KB swings</td><td>3x12-15</td><td>Hip hinge power</td></tr>
+            <tr><td>Weighted plank</td><td>3x40s</td><td></td></tr>
+            <tr><td>Pallof press</td><td>3x10/side</td><td>Anti-rotation</td></tr>
+        </table>
 
-<h2>Bow Practice Under Fatigue (Weeks 6-7)</h2>
-<p>1-2x/week:</p>
-<ul>
-  <li>Hike hard for 20-30 min (elevated HR, Zone 3+)</li>
-  <li>Immediately shoot 10-15 arrows at 30-50 yards</li>
-  <li>Focus on executing shot process while breathing hard and shoulders are tired</li>
-  <li>Simulates spot-and-stalk: grind to close distance, then execute</li>
-</ul>
+        <h3>Strength B Template (Base 1)</h3>
+        <table>
+            <tr><th>Exercise</th><th>Sets x Reps</th><th>Notes</th></tr>
+            <tr><td>Bent-over rows</td><td>3x10</td><td>Back strength for pack frame</td></tr>
+            <tr><td>Floor press or DB bench</td><td>3x8</td><td>General upper</td></tr>
+            <tr><td>Farmer carries</td><td>3x60m</td><td>Heavy as possible</td></tr>
+            <tr><td>Single-leg deadlift</td><td>3x8/leg</td><td>Balance + posterior chain</td></tr>
+            <tr><td>Turkish get-ups</td><td>2x3/side</td><td>Stability + shoulder health for bow</td></tr>
+            <tr><td>Dead bugs</td><td>3x12</td><td>Core stability</td></tr>
+            <tr><td>Side plank</td><td>3x30s/side</td><td></td></tr>
+        </table>
+        </div>
+    </div>
 
-<h2>Strength Workouts</h2>
+    <!-- ===== BASE 2 ===== -->
+    <div class="phase base2">
+        <h2 class="collapsible" onclick="toggleSection(this)">Base 2: Aerobic + Max Strength (Weeks 15-21: Dec 22 – Feb 9)</h2>
+        <div class="collapsible-content">
+        <p class="note">Peak absolute strength. Continue aerobic volume (7-8 hrs/wk). Skiing counts as aerobic volume. Adjust non-ski sessions on heavy ski weeks.</p>
 
-<h3>Strength A (Legs + Core)</h3>
-<table>
-  <tr><th>Exercise</th><th>Sets x Reps</th><th>Notes</th></tr>
-  <tr><td>Barbell or heavy DB squats</td><td>3x8-10</td><td>Below parallel</td></tr>
-  <tr><td>Romanian deadlifts</td><td>3x10</td><td>Hamstrings + posterior chain</td></tr>
-  <tr><td>Bulgarian split squats</td><td>3x8/leg</td><td>Unilateral strength</td></tr>
-  <tr><td>Step-ups (18-24" box, weighted)</td><td>3x10/leg</td><td>Drive from front leg only</td></tr>
-  <tr><td>Eccentric step-downs</td><td>3x12 &rarr; 4x15/leg</td><td><strong>4-count lowering. THE key exercise.</strong> See progression table.</td></tr>
-  <tr><td>KB swings</td><td>3x15</td><td>Heavy. Hip hinge power.</td></tr>
-  <tr><td>Weighted plank</td><td>3x45 sec</td><td></td></tr>
-  <tr><td>Pallof press</td><td>3x12/side</td><td>Anti-rotation core</td></tr>
-</table>
+        <h3 class="week-header">Weeks 15-17 (Dec 22 – Jan 11): Max Strength Ramp</h3>
+        <div class="day-row"><input type="checkbox" id="cb31"><label for="cb31"><span class="day-label">Wk15</span> Max Strength 2x/wk: DB front squat 4x5 (heavy), SL step-up 24" 3x5/leg, heavy RDL 4x5, heavy row 4x5. Aerobic 3-4x/wk (hiking or skiing).</label></div>
+        <div class="day-row"><input type="checkbox" id="cb32"><label for="cb32"><span class="day-label">Wk16</span> Progress loads. Add KB swings 5x5 heavy. Loaded carries 4x40m max weight. Eccentric step-downs 3x10/leg +10 lbs, 18" box.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb33"><label for="cb33"><span class="day-label">Wk17</span> Continue progression. If skiing 2+ days, reduce one aerobic hike.</label></div>
 
-<h3>Strength B (Upper + Core)</h3>
-<table>
-  <tr><th>Exercise</th><th>Sets x Reps</th><th>Notes</th></tr>
-  <tr><td>Pull-ups or rows</td><td>3x8-10</td><td>Back strength for pack frame</td></tr>
-  <tr><td>Overhead press</td><td>3x8</td><td>Shoulder stability</td></tr>
-  <tr><td>Farmer carries</td><td>3x100m</td><td>Heavy as possible</td></tr>
-  <tr><td>Turkish get-ups</td><td>2x3/side</td><td>Stability + shoulder health for bow</td></tr>
-  <tr><td>Single-leg deadlift</td><td>3x8/leg</td><td>Balance for uneven terrain</td></tr>
-  <tr><td>Dead bugs</td><td>3x12</td><td>Core stability</td></tr>
-  <tr><td>Side plank</td><td>3x30 sec/side</td><td></td></tr>
-</table>
+        <h3 class="week-header">Week 18 (Jan 12-18): Step-Back</h3>
+        <div class="day-row"><input type="checkbox" id="cb34"><label for="cb34"><span class="day-label">Wk18</span> <strong>STEP-BACK:</strong> Strength at 85% loads, 3x5 instead of 4-5x5. Easy aerobic only. Total ~6 hrs.</label></div>
 
-<h2>Benchmarks to Hit by End of Week 7</h2>
-<table>
-  <tr><th>Benchmark</th><th>Target</th><th>&#10003;</th></tr>
-  <tr><td>Pack 50 lbs uphill for 2,000+ ft gain</td><td>Steady effort, stops under 2 min</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Pack 70-80 lbs downhill for 1,000+ ft loss</td><td>Controlled descent, quads hold up</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Single day 6+ miles loaded (50 lbs)</td><td>Complete without bonking</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Back-to-back days loaded</td><td>Pack in Day 1, function Day 2</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Shoot bow after 30+ min Zone 3 effort</td><td>Consistent groups at 40 yards</td><td class="cb"><input type="checkbox"></td></tr>
-  <tr><td>Dress rehearsal complete (overnight)</td><td>No gear surprises, nutrition validated</td><td class="cb"><input type="checkbox"></td></tr>
-</table>
+        <h3 class="week-header">Weeks 19-21 (Jan 19 – Feb 9): Max Strength Peak</h3>
+        <div class="day-row"><input type="checkbox" id="cb35"><label for="cb35"><span class="day-label">Wk19</span> Peak strength: DB front squat 5x3 (near-max), SL step-up 4x5/leg (heavy), RDL 5x3, weighted pull-up/row 4x5. Eccentric step-downs 3x12/leg +15 lbs, 18" box.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb36"><label for="cb36"><span class="day-label">Wk20</span> Hold peak loads. Add Turkish get-ups heavy (2x3/side). Loaded carry: front rack 4x40m.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb37"><label for="cb37"><span class="day-label">Wk21</span> Final heavy week. Test: max-effort farmer carry distance. Note numbers. Then begin GS taper.</label></div>
 
-<h2>Hunt-Day Safety Adjustments (Mandatory)</h2>
+        <h3>Max Strength Template</h3>
+        <table>
+            <tr><th>Exercise</th><th>Sets x Reps</th><th>Notes</th></tr>
+            <tr><td>DB front squat (heavy)</td><td>4-5x3-5</td><td>Near-max effort. Full depth.</td></tr>
+            <tr><td>Single-leg step-up (24" box)</td><td>4x5/leg</td><td>Heavy DB. Controlled.</td></tr>
+            <tr><td>RDL (heavy DB)</td><td>4-5x3-5</td><td>Posterior chain peak</td></tr>
+            <tr><td>KB swing (heavy)</td><td>5x5</td><td>Power + hip hinge</td></tr>
+            <tr><td>Weighted row or pull-up</td><td>4x5</td><td>Pack-carrying back strength</td></tr>
+            <tr><td>Loaded carry (farmer/front rack)</td><td>4x40m</td><td>Max weight available</td></tr>
+            <tr><td>Eccentric step-downs (18" box)</td><td>3x10-12/leg</td><td>+10-15 lbs, 4-count lowering</td></tr>
+            <tr><td>Turkish get-up</td><td>2x3/side</td><td>Stability</td></tr>
+        </table>
+        </div>
+    </div>
 
-<div class="warning">
-<strong>These are non-negotiable.</strong> You will arrive with less eccentric conditioning than the original 9-week plan intended. These adjustments prevent injury on the mountain.
-</div>
+    <!-- ===== GS RACE ===== -->
+    <div class="phase race">
+        <h2 class="collapsible" onclick="toggleSection(this)">GS Race Mini-Peak (Week 22: Feb 10-16)</h2>
+        <div class="collapsible-content">
+        <p class="note"><strong>B-priority event.</strong> 3-5 day mini-taper. No restructuring of annual plan.</p>
+        <div class="day-row"><input type="checkbox" id="cb38"><label for="cb38"><span class="day-label">Mon</span> Normal strength session (lighter — 80% loads)</label></div>
+        <div class="day-row"><input type="checkbox" id="cb39"><label for="cb39"><span class="day-label">Tue</span> Easy ski or hike, 45 min</label></div>
+        <div class="day-row"><input type="checkbox" id="cb40"><label for="cb40"><span class="day-label">Wed</span> Short sharp ski session — 4-5 gates, speed work, 30 min total</label></div>
+        <div class="day-row"><input type="checkbox" id="cb41"><label for="cb41"><span class="day-label">Thu</span> Easy movement only, 30 min walk</label></div>
+        <div class="day-row"><input type="checkbox" id="cb42"><label for="cb42"><span class="day-label">Fri</span> Rest</label></div>
+        <div class="day-row"><input type="checkbox" id="cb43"><label for="cb43"><span class="day-label">Sat</span> <strong>GS RACE DAY</strong></label></div>
+        <div class="day-row"><input type="checkbox" id="cb44"><label for="cb44"><span class="day-label">Sun</span> Easy recovery activity</label></div>
+        <div class="note">Resume normal training Monday. Sub-2-min race effort needs no extended recovery.</div>
+        </div>
+    </div>
 
-<h3>1. Pack-Out Strategy: 3 Loads, Not 2</h3>
-<p>Original plan assumed full eccentric conditioning for 100 lbs on a long steep descent. You won't have that. Plan for:</p>
-<table>
-  <tr><th>Load</th><th>Weight</th><th>Contents</th></tr>
-  <tr><td>Trip 1</td><td>~70 lbs</td><td>Gear (30 lbs) + first meat load (40 lbs)</td></tr>
-  <tr><td>Trip 2</td><td>~50-60 lbs</td><td>Remaining meat</td></tr>
-  <tr><td>Trip 3 (if needed)</td><td>~30-40 lbs</td><td>Final meat/parts</td></tr>
-</table>
-<p>One extra half-day trip is far cheaper than blown quads, a fall, or a knee injury miles from the trailhead.</p>
+    <!-- ===== BASE 3 ===== -->
+    <div class="phase base3">
+        <h2 class="collapsible" onclick="toggleSection(this)">Base 3: Aerobic Volume Peak (Weeks 23-30: Feb 17 – Apr 13)</h2>
+        <div class="collapsible-content">
+        <p class="note">Push aerobic volume to annual peak (9 hrs/wk). Maintain strength at 85-90% of max phase. Introduce light weighted hiking (Week 28+).</p>
 
-<h3>2. Trekking Poles</h3>
-<p>Mandatory on every descent, loaded or not. Non-negotiable. Practice technique under load during Weeks 6-7.</p>
+        <h3 class="week-header">Weeks 23-26 (Feb 17 – Mar 16): Volume Build</h3>
+        <div class="day-row"><input type="checkbox" id="cb45"><label for="cb45"><span class="day-label">Wk23</span> Resume: Strength 2x/wk (maintenance 3x5 at 85%), Aerobic 4x/wk. Sat long hike 2.5-3 hrs. Total ~7 hrs.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb46"><label for="cb46"><span class="day-label">Wk24</span> Push aerobic sessions to 75 min. Sat 3+ hrs. Total ~7.5 hrs.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb47"><label for="cb47"><span class="day-label">Wk25</span> Continue build. Add a 5th easy session (30-45 min walk) if schedule allows. Total ~8 hrs.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb48"><label for="cb48"><span class="day-label">Wk26</span> <strong>AeT RETEST.</strong> Must be within 10% of AnT (by HR) to begin ME on schedule. Sat: 3.5 hr hike. Total ~8 hrs.</label></div>
 
-<h3>3. Descent Technique</h3>
-<ul>
-  <li><strong>Rest-step on descents:</strong> Short steps, slight pause at full knee extension. Slower but saves quads.</li>
-  <li><strong>Never bomb downhill.</strong> Controlled pace. Let time be the buffer.</li>
-  <li><strong>Switchback when possible</strong> rather than straight-line descents on steep grades.</li>
-</ul>
+        <h3 class="week-header">Week 27 (Mar 17-23): Step-Back</h3>
+        <div class="day-row"><input type="checkbox" id="cb49"><label for="cb49"><span class="day-label">Wk27</span> <strong>STEP-BACK:</strong> 85% volume. Shorter sessions, maintain strength. Total ~6.5 hrs.</label></div>
 
-<h3>4. First 48 Hours in Camp</h3>
-<p>Don't hunt aggressively Days 1-2. Your legs will be fatigued from the pack-in. Use the first day to:</p>
-<ul>
-  <li>Set up camp properly</li>
-  <li>Scout from camp with glass (binos/spotting scope)</li>
-  <li>Short scouting walks (&lt;3 miles) to locate sign and pattern deer</li>
-  <li>Let legs recover before committing to a stalk that could put you miles from camp</li>
-</ul>
+        <h3 class="week-header">Weeks 28-30 (Mar 24 – Apr 13): Volume Peak + Light Load Introduction</h3>
+        <div class="day-row"><input type="checkbox" id="cb50"><label for="cb50"><span class="day-label">Wk28</span> Add light pack (20 lbs) to ONE weekday hike. Sat: 3.5 hrs unweighted. Total ~8.5 hrs.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb51"><label for="cb51"><span class="day-label">Wk29</span> Light pack (25 lbs) on one hike. Push Sat to 4 hrs. Total ~9 hrs. <strong>Volume peak.</strong></label></div>
+        <div class="day-row"><input type="checkbox" id="cb52"><label for="cb52"><span class="day-label">Wk30</span> Maintain volume peak. Light pack (25-30 lbs) on 1-2 hikes. Strength continues at maintenance.</label></div>
 
-<h3>5. Anti-Inflammatory Protocol</h3>
-<ul>
-  <li>Ibuprofen 400mg before the big pack-out descent (not daily use, just the critical load)</li>
-  <li>Elevate and stretch legs each evening in camp</li>
-  <li>Stay hydrated (0.5-1L/hr on loaded efforts)</li>
-</ul>
+        <div class="note"><strong>Decision Gate (Week 26):</strong> AeT must be within 10% of AnT by HR. If gap is larger, extend Base 3 by 2-4 weeks. Do NOT start ME phase with an aerobic deficit.</div>
+        </div>
+    </div>
 
-<h2>Gear Integration Checklist</h2>
-<ul class="checklist">
-  <li><input type="checkbox"> Actual hunt boots on ALL weighted hikes from Week 5 onward</li>
-  <li><input type="checkbox"> Identify and treat hot spots with leukotape before they become blisters</li>
-  <li><input type="checkbox"> Pack frame loaded to 70-80 lbs (dress rehearsal). Test comfort, adjust fit.</li>
-  <li><input type="checkbox"> Trekking poles. Practice technique under heavy load on descents.</li>
-  <li><input type="checkbox"> Bivy setup/teardown timed and practiced on Week 7 dress rehearsal</li>
-  <li><input type="checkbox"> Hunt nutrition strategy tested on long efforts (what, how much, when)</li>
-  <li><input type="checkbox"> Water filtering tested and practiced on route</li>
-  <li><input type="checkbox"> Game bags, citric acid spray, knife kit. Weight accounted for in pack-out load.</li>
-</ul>
+    <!-- ===== SPECIFIC 1 ===== -->
+    <div class="phase specific1">
+        <h2 class="collapsible" onclick="toggleSection(this)">Specific 1: Muscular Endurance (Weeks 31-38: Apr 14 – Jun 8)</h2>
+        <div class="collapsible-content">
+        <p class="note">Convert max strength into sustained carrying capacity. Progressive eccentric conditioning. 1x/wk dedicated ME session. Legs burning but conversational = correct intensity.</p>
 
-<h2>Nutrition Notes</h2>
-<ul>
-  <li>Training days: eat to fuel. Don't cut calories during these 5 weeks.</li>
-  <li>Saturday long efforts: practice actual hunt food (bars, jerky, trail mix, freeze-dried)</li>
-  <li>Hydration: target 0.5-1L per hour on loaded efforts. Know your sweat rate.</li>
-  <li>6 days of food = ~12 lbs (2 lbs/day calorie-dense). Test your menu on Week 6-7 simulations.</li>
-</ul>
+        <h3 class="week-header">Weeks 31-32: ME Introduction (35 lbs)</h3>
+        <div class="day-row"><input type="checkbox" id="cb53"><label for="cb53"><span class="day-label">Mon</span> Strength (eccentric focus): step-downs 3x12/leg +10 lbs 18" box, SL work, core</label></div>
+        <div class="day-row"><input type="checkbox" id="cb54"><label for="cb54"><span class="day-label">Tue</span> Aerobic hike, Zone 1-2, 60-75 min unweighted</label></div>
+        <div class="day-row"><input type="checkbox" id="cb55"><label for="cb55"><span class="day-label">Wed</span> <strong>ME SESSION:</strong> 35 lbs, 6-8 hill repeats (100ft hill). Walk down easy. 2 min rest between.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb56"><label for="cb56"><span class="day-label">Thu</span> Easy recovery hike, 45-60 min, Zone 1</label></div>
+        <div class="day-row"><input type="checkbox" id="cb57"><label for="cb57"><span class="day-label">Sat</span> Long weighted hike: 30-35 lbs, 2.5-3 hrs, 1500ft+ gain. Hunt boots on.</label></div>
 
-<h2>What You'll Realistically Lose vs. Original Plan</h2>
-<table>
-  <tr><th>Capability</th><th>Original 9-Week Plan</th><th>This 5-Week Plan</th><th>Mitigation</th></tr>
-  <tr><td>Eccentric tolerance</td><td>Fully conditioned for 100 lbs on full descent</td><td>70-80 lbs safe, 100 lbs risky</td><td>3-trip pack-out strategy</td></tr>
-  <tr><td>Aerobic base</td><td>7 weeks progressive build</td><td>~4 weeks effective volume</td><td>Slower pace, more breaks on pack-in</td></tr>
-  <tr><td>Load familiarity</td><td>3 weeks at 50 lbs</td><td>1.5 weeks at 50 lbs</td><td>Conservative day 1-2 in field</td></tr>
-  <tr><td>Dress rehearsal</td><td>Full 100 lb overnight pack-out</td><td>70-80 lb overnight pack-out</td><td>Good enough for gear validation</td></tr>
-</table>
+        <h3 class="week-header">Weeks 33-34: ME Build (40 lbs)</h3>
+        <div class="day-row"><input type="checkbox" id="cb58"><label for="cb58"><span class="day-label">Mon</span> Strength: step-downs 3x15/leg +15 lbs 18" box, SL work, core</label></div>
+        <div class="day-row"><input type="checkbox" id="cb59"><label for="cb59"><span class="day-label">Wed</span> <strong>ME SESSION:</strong> 40 lbs, 8-10 repeats. 90 sec rest. Controlled descent.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb60"><label for="cb60"><span class="day-label">Sat</span> Long weighted hike: 40 lbs, 3 hrs, 1500ft+. Seek 500ft descents — practice poles under load.</label></div>
 
-<h2>Key Principles</h2>
-<ol>
-  <li><strong>Zone 1-2 is king</strong> &mdash; 80% of volume at conversational pace. Build the aerobic base.</li>
-  <li><strong>Specificity matters</strong> &mdash; weighted uphill hiking beats flat running for this objective.</li>
-  <li><strong>Progressive overload</strong> &mdash; add load and volume gradually. Even compressed, don't jump ahead.</li>
-  <li><strong>Recovery is training</strong> &mdash; adaptation happens during rest, not during the session.</li>
-  <li><strong>Train the descent</strong> &mdash; eccentric loading is the most neglected and most punishing aspect.</li>
-  <li><strong>Respect the gap</strong> &mdash; you lost 2 weeks. Hunt-day adjustments exist because of this. Follow them.</li>
-</ol>
+        <h3 class="week-header">Week 35: Step-Back</h3>
+        <div class="day-row"><input type="checkbox" id="cb61"><label for="cb61"><span class="day-label">Wk35</span> <strong>STEP-BACK:</strong> ME at 35 lbs, 6 repeats. Sat hike 2.5 hrs, 35 lbs. Reduce eccentric volume by 30%.</label></div>
 
-<br>
-<hr>
-<p style="font-size: 0.75rem; color: #666;"><em>Plan revised and compressed from 9-week original due to illness in Weeks 3-4. Bridge fitness confirmed retained (35 lbs felt easy on re-entry day). Listen to your body on joint pain (stop and address), but push through muscular fatigue (that's adaptation). If something hurts sharp, back off. If it burns, keep going.</em></p>
+        <h3 class="week-header">Weeks 36-37: ME Peak (45-50 lbs)</h3>
+        <div class="day-row"><input type="checkbox" id="cb62"><label for="cb62"><span class="day-label">Mon</span> Strength: step-downs 4x15/leg +20 lbs 18" box</label></div>
+        <div class="day-row"><input type="checkbox" id="cb63"><label for="cb63"><span class="day-label">Wed</span> <strong>ME SESSION:</strong> 45 lbs, 10-12 repeats. 60 sec rest. Loaded descents every rep.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb64"><label for="cb64"><span class="day-label">Sat</span> Long weighted hike: 45 lbs, 3-3.5 hrs, 2000ft+ gain. Seek 800ft+ descents with poles.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb65"><label for="cb65"><span class="day-label">Wk37</span> ME: 50 lbs, 10+ repeats, 45 sec rest. Sat: 50 lbs, 3.5-4 hrs, 2000ft+, 1000ft+ descent. <strong>Begin bow practice 1x/wk (fresh).</strong></label></div>
 
-<script>
-(function() {
-  // --- Configuration ---
-  var CONFIG_KEY = 'github-hunt-plan-config';
-  var LOCAL_STATE_KEY = 'backcountry-hunt-plan-v4-checkboxes';
-  var FILE_PATH = 'state/checkboxes.json';
+        <h3 class="week-header">Week 38: Transition to Specific 2</h3>
+        <div class="day-row"><input type="checkbox" id="cb66"><label for="cb66"><span class="day-label">Mon</span> Strength: step-downs 4x15/leg +25 lbs 24" box</label></div>
+        <div class="day-row"><input type="checkbox" id="cb67"><label for="cb67"><span class="day-label">Wed</span> ME SESSION: 50 lbs, 10+ repeats, 45 sec rest</label></div>
+        <div class="day-row"><input type="checkbox" id="cb68"><label for="cb68"><span class="day-label">Sat</span> <strong>GATE TEST:</strong> 50 lbs, 3.5 hrs, 2000ft gain. No breakdown, quads hold on descent. Pass = proceed to Specific 2.</label></div>
 
-  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  var fileSha = null;
-  var saveTimeout = null;
-  var isOffline = false;
+        <div class="note"><strong>Decision Gate (Week 38):</strong> Carry 50 lbs for 3.5 hrs with 2000ft gain without breakdown. If failing, extend Specific 1 by 2 weeks before progressing loads.</div>
+        </div>
+    </div>
 
-  checkboxes.forEach(function(cb, i) {
-    cb.setAttribute('data-cb-id', i);
-  });
+    <!-- ===== SPECIFIC 2 ===== -->
+    <div class="phase specific2">
+        <h2 class="collapsible" onclick="toggleSection(this)">Specific 2: Hunt Simulation (Weeks 39-48: Jun 9 – Aug 17)</h2>
+        <div class="collapsible-content">
+        <p class="note">Full objective simulation. Peak load. Overnight missions. Bow under fatigue. Gear validation. Do the hunt in training.</p>
 
-  // --- Config Management ---
-  function getConfig() {
-    try {
-      var raw = localStorage.getItem(CONFIG_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch(e) { return null; }
-  }
+        <h3 class="week-header">Weeks 39-40: Load Progression (55-60 lbs)</h3>
+        <div class="day-row"><input type="checkbox" id="cb69"><label for="cb69"><span class="day-label">Mon</span> Strength: step-downs 4x15/leg +30 lbs 24" box, SL work</label></div>
+        <div class="day-row"><input type="checkbox" id="cb70"><label for="cb70"><span class="day-label">Tue</span> Weighted uphill intervals: 55 lbs, steep, Zone 3-4 up, controlled down. 50-60 min.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb71"><label for="cb71"><span class="day-label">Wed</span> Bow under fatigue: 20-30 min hard effort (Zone 3+) → shoot 15 arrows at 30-50 yds</label></div>
+        <div class="day-row"><input type="checkbox" id="cb72"><label for="cb72"><span class="day-label">Thu</span> Weighted descent: 55 lbs, 1000ft+, poles, controlled pace</label></div>
+        <div class="day-row"><input type="checkbox" id="cb73"><label for="cb73"><span class="day-label">Sat</span> Simulation: 55-60 lbs, 6-8 miles, 2000ft+ gain. All-day effort. Hunt boots. Full gear.</label></div>
 
-  function saveConfig(cfg) {
-    localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
-  }
+        <h3 class="week-header">Weeks 41-42: Overnight Simulations (60 lbs in, 90 lbs out)</h3>
+        <div class="day-row"><input type="checkbox" id="cb74"><label for="cb74"><span class="day-label">Tue</span> Weighted uphill intervals: 60 lbs, Zone 3-4 up, controlled down.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb75"><label for="cb75"><span class="day-label">Wed</span> Bow under fatigue: 2x/wk now. Include field positions (kneeling, quartering).</label></div>
+        <div class="day-row"><input type="checkbox" id="cb76"><label for="cb76"><span class="day-label">Thu</span> Weighted descent: 60 lbs, 1000ft+, poles</label></div>
+        <div class="day-row"><input type="checkbox" id="cb77"><label for="cb77"><span class="day-label">Sat</span> <strong>OVERNIGHT SIM:</strong> 60 lbs pack-in. Bivy overnight. AM: add 30 lbs (water/sandbag) → descend loaded at 90 lbs.</label></div>
 
-  function showConfigModal(cancelable) {
-    var overlay = document.getElementById('config-overlay');
-    var cfg = getConfig() || {};
-    document.getElementById('cfg-owner').value = cfg.owner || '';
-    document.getElementById('cfg-repo').value = cfg.repo || '';
-    document.getElementById('cfg-branch').value = cfg.branch || 'main';
-    document.getElementById('cfg-pat').value = cfg.pat || '';
-    document.getElementById('config-test-result').className = 'config-test-result';
-    document.getElementById('config-test-result').textContent = '';
-    document.getElementById('btn-cancel').style.display = cancelable ? '' : 'none';
-    overlay.classList.add('visible');
-  }
+        <h3 class="week-header">Week 43: Step-Back</h3>
+        <div class="day-row"><input type="checkbox" id="cb78"><label for="cb78"><span class="day-label">Wk43</span> <strong>STEP-BACK:</strong> 45 lbs, shorter sessions. Maintain bow practice. Recovery emphasis. Total ~7 hrs.</label></div>
 
-  function hideConfigModal() {
-    document.getElementById('config-overlay').classList.remove('visible');
-  }
+        <h3 class="week-header">Weeks 44-45: Multi-Day Camp Simulation</h3>
+        <div class="day-row"><input type="checkbox" id="cb79"><label for="cb79"><span class="day-label">Tue</span> Weighted intervals: 60 lbs, steep, 50-60 min</label></div>
+        <div class="day-row"><input type="checkbox" id="cb80"><label for="cb80"><span class="day-label">Wed</span> Bow under fatigue (2x/wk). Practice ranging in terrain.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb81"><label for="cb81"><span class="day-label">Sat</span> <strong>CAMP SIM:</strong> 60 lbs pack-in, 8+ miles. Camp 2 nights. Practice full camp routine: glassing, food plan, bivy setup/teardown. Walk out loaded (60 lbs).</label></div>
 
-  function getModalValues() {
-    return {
-      owner: document.getElementById('cfg-owner').value.trim(),
-      repo: document.getElementById('cfg-repo').value.trim(),
-      branch: document.getElementById('cfg-branch').value.trim() || 'main',
-      pat: document.getElementById('cfg-pat').value.trim()
-    };
-  }
+        <h3 class="week-header">Weeks 46-47: Dress Rehearsals (90-100 lbs pack-out)</h3>
+        <div class="day-row"><input type="checkbox" id="cb82"><label for="cb82"><span class="day-label">Mon</span> Strength: step-downs 4x15/leg +30-35 lbs 24" box</label></div>
+        <div class="day-row"><input type="checkbox" id="cb83"><label for="cb83"><span class="day-label">Tue</span> Weighted intervals: 60 lbs, maintain sharpness</label></div>
+        <div class="day-row"><input type="checkbox" id="cb84"><label for="cb84"><span class="day-label">Wed</span> Bow: shoot from all field positions after fatigue effort</label></div>
+        <div class="day-row"><input type="checkbox" id="cb85"><label for="cb85"><span class="day-label">Sat</span> <strong>DRESS REHEARSAL 1:</strong> Full gear, 60 lbs in (long approach matching hunt distance). Camp overnight. AM: load to 90-100 lbs, descend 3-4 miles. Validate quads hold.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb86"><label for="cb86"><span class="day-label">Wk47</span> <strong>DRESS REHEARSAL 2:</strong> Same profile OR back-to-back loaded days (simulate Day 7 legs). Refine any gear/nutrition issues from DR1.</label></div>
 
-  // --- GitHub API ---
-  function githubApiUrl(cfg) {
-    return 'https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + FILE_PATH + '?ref=' + cfg.branch;
-  }
+        <h3 class="week-header">Week 48: Final Build Week</h3>
+        <div class="day-row"><input type="checkbox" id="cb87"><label for="cb87"><span class="day-label">Wk48</span> Maintain intensity: 1 interval session, 1 weighted descent, 1 bow session. Eccentric drops to 3x10 (maintain). Begin mental shift to taper.</label></div>
 
-  function githubFetch(cfg) {
-    return fetch(githubApiUrl(cfg), {
-      headers: {
-        'Authorization': 'Bearer ' + cfg.pat,
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    });
-  }
+        <div class="note"><strong>Decision Gate (Week 46):</strong> 90 lbs descent, 1000ft+, quads intact = green light for full hunt loads. If failing at 90, cap pack-out trips at 70 lbs (3-trip strategy).</div>
 
-  function githubPut(cfg, content, sha, message) {
-    var body = {
-      message: message || 'Update checkbox state',
-      content: btoa(JSON.stringify(content, null, 2)),
-      sha: sha,
-      branch: cfg.branch
-    };
-    return fetch('https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + FILE_PATH, {
-      method: 'PUT',
-      headers: {
-        'Authorization': 'Bearer ' + cfg.pat,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
-  }
+        <h3>Benchmarks (must hit by end of Week 48)</h3>
+        <table class="benchmark-table">
+            <tr><th>Benchmark</th><th>Target</th></tr>
+            <tr><td>60 lbs uphill, 8+ miles, 2500ft+ gain</td><td>Steady all-day effort, no bonking</td></tr>
+            <tr><td>90-100 lbs downhill, 1000ft+ loss</td><td>Controlled descent, quads hold</td></tr>
+            <tr><td>Back-to-back loaded days</td><td>Function on Day 2, moderate fatigue only</td></tr>
+            <tr><td>9-day food/water plan validated</td><td>Calories, hydration, weight confirmed</td></tr>
+            <tr><td>Overnight bivy w/ full setup</td><td>No gear surprises, sleep system works</td></tr>
+            <tr><td>Bow at 40 yds after 30 min Zone 3</td><td>Consistent 4" groups</td></tr>
+            <tr><td>2 full dress rehearsals complete</td><td>Both without injury or failure</td></tr>
+        </table>
+        </div>
+    </div>
 
-  // --- State Management ---
-  function buildState() {
-    var state = { version: 1, checkboxes: {} };
-    checkboxes.forEach(function(cb, i) {
-      state.checkboxes[String(i)] = cb.checked;
-    });
-    return state;
-  }
+    <!-- ===== TAPER ===== -->
+    <div class="phase taper">
+        <h2 class="collapsible" onclick="toggleSection(this)">Taper (Weeks 49-50: Aug 18-31)</h2>
+        <div class="collapsible-content">
+        <p class="note">Arrive fresh, strong, and confident. Volume drops 50%. Intensity maintained. You're not building fitness here — you're banking it.</p>
 
-  function applyState(state) {
-    if (!state || !state.checkboxes) return;
-    checkboxes.forEach(function(cb, i) {
-      var val = state.checkboxes[String(i)];
-      if (val !== undefined) cb.checked = val;
-    });
-    updateProgress();
-  }
+        <h3 class="week-header">Week 49</h3>
+        <div class="day-row"><input type="checkbox" id="cb88"><label for="cb88"><span class="day-label">Mon</span> Strength light: 2x6 at 70% peak. Eccentric step-downs 2x10/leg (maintain).</label></div>
+        <div class="day-row"><input type="checkbox" id="cb89"><label for="cb89"><span class="day-label">Tue</span> Weighted hike: 40 lbs, 60 min, moderate terrain. Stay sharp.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb90"><label for="cb90"><span class="day-label">Thu</span> Uphill intervals: 40 lbs, 45 min. Short, sharp efforts. Maintain top-end.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb91"><label for="cb91"><span class="day-label">Sat</span> Hike: 30 lbs, 2 hrs. Light and easy. Stay loose.</label></div>
 
-  function saveToLocalStorage() {
-    var state = {};
-    checkboxes.forEach(function(cb, i) {
-      state[i] = cb.checked;
-    });
-    localStorage.setItem(LOCAL_STATE_KEY, JSON.stringify(state));
-  }
+        <h3 class="week-header">Week 50</h3>
+        <div class="day-row"><input type="checkbox" id="cb92"><label for="cb92"><span class="day-label">Mon</span> Light hike: 30 lbs, 45 min. Last loaded effort.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb93"><label for="cb93"><span class="day-label">Wed</span> Easy walk, 30 min. Mobility session.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb94"><label for="cb94"><span class="day-label">Fri</span> Bow confirmation: 20 arrows, broadhead zero confirmed. Done.</label></div>
+        </div>
+    </div>
 
-  function loadFromLocalStorage() {
-    try {
-      var saved = localStorage.getItem(LOCAL_STATE_KEY);
-      if (!saved) return null;
-      var raw = JSON.parse(saved);
-      var state = { version: 1, checkboxes: {} };
-      Object.keys(raw).forEach(function(k) { state.checkboxes[k] = raw[k]; });
-      return state;
-    } catch(e) { return null; }
-  }
+    <!-- ===== HUNT WEEK ===== -->
+    <div class="phase hunt">
+        <h2 class="collapsible" onclick="toggleSection(this)">Hunt Week (Sep 1+)</h2>
+        <div class="collapsible-content">
+        <div class="day-row"><input type="checkbox" id="cb95"><label for="cb95"><span class="day-label">Mon</span> Rest. Final gear check. Pack organized. Food portioned by day.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb96"><label for="cb96"><span class="day-label">Tue</span> Easy 30 min walk. Stay loose. Don't sit all day.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb97"><label for="cb97"><span class="day-label">Wed</span> Bow practice: 20 arrows fresh. Confirm broadhead zero at 30, 40, 50.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb98"><label for="cb98"><span class="day-label">Thu</span> Travel to trailhead area.</label></div>
+        <div class="day-row"><input type="checkbox" id="cb99"><label for="cb99"><span class="day-label">Fri</span> Pack-in or final rest (pack-in Sat AM if preferred).</label></div>
+        <div class="day-row"><input type="checkbox" id="cb100"><label for="cb100"><span class="day-label">Sat+</span> <strong>HUNT. 9 days. You're ready.</strong></label></div>
+        </div>
+    </div>
 
-  // --- UI Updates ---
-  function updateProgress() {
-    var total = checkboxes.length;
-    var checked = Array.from(checkboxes).filter(function(cb) { return cb.checked; }).length;
-    var pct = Math.round((checked / total) * 100);
-    document.getElementById('progress-text').textContent = checked + '/' + total + ' completed (' + pct + '%)';
-  }
+    <!-- ===== REFERENCE SECTIONS ===== -->
+    <div class="phase">
+        <h2 class="collapsible" onclick="toggleSection(this)">Reference: Eccentric Progression (Annual View)</h2>
+        <div class="collapsible-content">
+        <table>
+            <tr><th>Phase</th><th>Step-Downs</th><th>Loaded Descents</th></tr>
+            <tr><td>Transition (Wk 1-4)</td><td>None</td><td>None</td></tr>
+            <tr><td>Base 1 (Wk 5-14)</td><td>2-3x10/leg, BW→+10 lbs, 12" box</td><td>None (unweighted hills)</td></tr>
+            <tr><td>Base 2 (Wk 15-21)</td><td>3x10-12/leg, +10-15 lbs, 18" box</td><td>Light only</td></tr>
+            <tr><td>Base 3 (Wk 23-30)</td><td>3x12/leg, +15 lbs, 18" box</td><td>20-30 lbs, moderate hills</td></tr>
+            <tr><td>Specific 1 (Wk 31-38)</td><td>3-4x15/leg, +10→25 lbs, 18→24" box</td><td>35→50 lbs, 500→1000ft+</td></tr>
+            <tr><td>Specific 2 (Wk 39-48)</td><td>4x15/leg, +30-35 lbs, 24" box</td><td>60→100 lbs, 1000ft+</td></tr>
+            <tr><td>Taper (Wk 49-50)</td><td>2x10/leg, maintain</td><td>Light only</td></tr>
+        </table>
+        </div>
+    </div>
 
-  function showStatus(msg, duration) {
-    var el = document.getElementById('save-status');
-    el.textContent = msg;
-    if (duration) {
-      setTimeout(function() { el.textContent = ''; }, duration);
-    }
-  }
+    <div class="phase">
+        <h2 class="collapsible" onclick="toggleSection(this)">Reference: Load Progression (Annual View)</h2>
+        <div class="collapsible-content">
+        <table>
+            <tr><th>Phase</th><th>Weekday Loads</th><th>Saturday Long Effort</th></tr>
+            <tr><td>Transition</td><td>Unweighted</td><td>Unweighted</td></tr>
+            <tr><td>Base 1</td><td>Unweighted</td><td>Unweighted</td></tr>
+            <tr><td>Base 2</td><td>Unweighted</td><td>Unweighted</td></tr>
+            <tr><td>Base 3 (late)</td><td>20-30 lbs (1x/wk)</td><td>Unweighted</td></tr>
+            <tr><td>Specific 1</td><td>35→50 lbs</td><td>30→50 lbs</td></tr>
+            <tr><td>Specific 2</td><td>55→60 lbs</td><td>60 in / 90-100 out</td></tr>
+            <tr><td>Taper</td><td>30-40 lbs</td><td>30 lbs</td></tr>
+        </table>
+        </div>
+    </div>
 
-  function setOfflineMode(offline) {
-    isOffline = offline;
-    var banner = document.getElementById('offline-banner');
-    if (offline) {
-      banner.classList.add('visible');
-    } else {
-      banner.classList.remove('visible');
-    }
-  }
+    <div class="phase">
+        <h2 class="collapsible" onclick="toggleSection(this)">Reference: Equipment Acquisition Timeline</h2>
+        <div class="collapsible-content">
+        <table>
+            <tr><th>Item</th><th>When</th><th>Why</th></tr>
+            <tr><td>Kettlebells (24kg, 32kg)</td><td>October 2026</td><td>General/max strength phases</td></tr>
+            <tr><td>Medicine ball (14-20 lb)</td><td>October 2026</td><td>Core rotational work</td></tr>
+            <tr><td>Heavier KB (40kg) or sandbag</td><td>January 2027</td><td>Max strength peak</td></tr>
+            <tr><td>24" plyo box (sturdy)</td><td>March 2027</td><td>Eccentric step-down progression</td></tr>
+            <tr><td>Trekking poles</td><td>April 2027</td><td>All loaded descents from Specific 1</td></tr>
+        </table>
+        </div>
+    </div>
 
-  // --- Load from GitHub ---
-  function loadFromGitHub() {
-    var cfg = getConfig();
-    if (!cfg || !cfg.pat) {
-      showConfigModal(false);
-      return;
-    }
+    <div class="phase">
+        <h2 class="collapsible" onclick="toggleSection(this)">Reference: Knee Management Protocol</h2>
+        <div class="collapsible-content">
+        <p><strong>Daily (Transition through Base 1):</strong></p>
+        <ul style="margin: 0.5rem 0; padding-left: 1.5rem; color: var(--text-dim);">
+            <li>Terminal knee extensions (TKE) with band: 3x15</li>
+            <li>Spanish squats: 2x30s</li>
+            <li>Wall sits at 70°: 2x30s</li>
+        </ul>
+        <p style="margin-top: 0.5rem;"><strong>Ongoing rule:</strong> If step-ups at 24" cause pain, stay at 18" and progress load instead of height. Sharp pain that increases during session = stop. Dull ache that fades after warmup = proceed.</p>
+        <p style="margin-top: 0.5rem;"><strong>Red flag:</strong> If pain persists past Week 8, get assessed by a physio.</p>
+        </div>
+    </div>
 
-    showStatus('Syncing...');
+    <div class="phase">
+        <h2 class="collapsible" onclick="toggleSection(this)">Reference: AeT Heart Rate Drift Test Protocol</h2>
+        <div class="collapsible-content">
+        <ol style="margin: 0.5rem 0; padding-left: 1.5rem; color: var(--text-dim);">
+            <li>No food 60 min before. No caffeine 4 hrs before.</li>
+            <li>Warm up 15 min easy.</li>
+            <li>60 min steady effort at constant pace on flat/consistent surface.</li>
+            <li>Compare avg HR of first 30 min vs last 30 min.</li>
+            <li>&lt;5% drift = you were below AeT. &gt;5% = above AeT.</li>
+            <li>Repeat at different efforts to bracket exact AeT HR.</li>
+        </ol>
+        <p style="margin-top: 0.5rem;"><strong>Schedule:</strong> Test at Week 5 (baseline), Week 10, Week 26. Update training zones after each test.</p>
+        </div>
+    </div>
 
-    githubFetch(cfg).then(function(resp) {
-      if (!resp.ok) {
-        if (resp.status === 401) throw new Error('Invalid token. Check your PAT.');
-        if (resp.status === 404) throw new Error('File not found. Check repo/owner or push state/checkboxes.json first.');
-        throw new Error('GitHub API error: ' + resp.status);
-      }
-      return resp.json();
-    }).then(function(data) {
-      fileSha = data.sha;
-      var content = JSON.parse(atob(data.content));
-      applyState(content);
-      saveToLocalStorage();
-      setOfflineMode(false);
-      showStatus('Synced', 2000);
-    }).catch(function(err) {
-      console.error('GitHub load failed:', err);
-      showStatus('Error: ' + err.message, 5000);
-      // Fall back to localStorage
-      var local = loadFromLocalStorage();
-      if (local) {
-        applyState(local);
-        setOfflineMode(true);
-      } else {
-        updateProgress();
-        setOfflineMode(true);
-      }
-    });
-  }
+    <div class="phase">
+        <h2 class="collapsible" onclick="toggleSection(this)">Reference: Key Principles</h2>
+        <div class="collapsible-content">
+        <ol style="margin: 0.5rem 0; padding-left: 1.5rem; color: var(--text-dim);">
+            <li><strong>Zone 1-2 is king</strong> — 80% of volume at conversational pace. Build the aerobic base.</li>
+            <li><strong>Specificity matters</strong> — weighted uphill hiking beats flat running for this objective.</li>
+            <li><strong>Progressive overload</strong> — add load and volume gradually. Respect the 10% rule.</li>
+            <li><strong>Recovery is training</strong> — adaptation happens during rest. Step-back weeks are mandatory.</li>
+            <li><strong>Train the descent</strong> — eccentric loading is the most neglected and most punishing aspect.</li>
+            <li><strong>Max strength first, endurance second</strong> — higher ceiling = lower relative effort at any given load.</li>
+            <li><strong>Simulate the objective</strong> — do the hunt in training before you do it for real.</li>
+            <li><strong>Decision gates exist for a reason</strong> — if you fail a gate, extend the phase. Do not skip ahead.</li>
+        </ol>
+        </div>
+    </div>
 
-  // --- Save to GitHub (debounced) ---
-  function scheduleSave() {
-    if (saveTimeout) clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(doSave, 1000);
-    showStatus('Syncing...');
-  }
+    <script>
+        // === GitHub Sync ===
+        let REPO = '';
+        let TOKEN = '';
+        let checkboxState = {};
 
-  function doSave() {
-    var cfg = getConfig();
-    var state = buildState();
-
-    // Always save locally as backup
-    saveToLocalStorage();
-    updateProgress();
-
-    if (!cfg || !cfg.pat || isOffline) {
-      if (isOffline) showStatus('Saved locally (offline)', 2000);
-      else showStatus('Saved locally', 2000);
-      return;
-    }
-
-    if (!fileSha) {
-      // Need to fetch SHA first
-      githubFetch(cfg).then(function(resp) {
-        if (!resp.ok) throw new Error('Cannot fetch SHA');
-        return resp.json();
-      }).then(function(data) {
-        fileSha = data.sha;
-        return pushState(cfg, state);
-      }).catch(function(err) {
-        console.error('Save failed (SHA fetch):', err);
-        showStatus('Error: ' + err.message, 4000);
-        setOfflineMode(true);
-      });
-    } else {
-      pushState(cfg, state);
-    }
-  }
-
-  function pushState(cfg, state) {
-    return githubPut(cfg, state, fileSha, 'Update training progress').then(function(resp) {
-      if (!resp.ok) {
-        if (resp.status === 409) {
-          // Conflict - SHA mismatch, refetch
-          fileSha = null;
-          showStatus('Conflict - retrying...', 2000);
-          setTimeout(doSave, 500);
-          return;
+        function setupSync() {
+            const repo = prompt('GitHub repo (e.g., Penumbralabs/training-plan-2027):');
+            if (!repo) return;
+            const token = prompt('GitHub PAT (fine-grained, Contents read/write):');
+            if (!token) return;
+            localStorage.setItem('tp_repo', repo);
+            localStorage.setItem('tp_token', token);
+            REPO = repo;
+            TOKEN = token;
+            loadState();
         }
-        throw new Error('Push failed: ' + resp.status);
-      }
-      return resp.json();
-    }).then(function(data) {
-      if (data && data.content) {
-        fileSha = data.content.sha;
-      }
-      setOfflineMode(false);
-      showStatus('Synced', 2000);
-    }).catch(function(err) {
-      console.error('Push failed:', err);
-      showStatus('Error: ' + err.message, 4000);
-    });
-  }
 
-  // --- Test Connection ---
-  function testConnection() {
-    var cfg = getModalValues();
-    var resultEl = document.getElementById('config-test-result');
+        async function loadState() {
+            if (!REPO || !TOKEN) return;
+            try {
+                const resp = await fetch(`https://api.github.com/repos/${REPO}/contents/state/checkboxes.json`, {
+                    headers: { 'Authorization': `token ${TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+                });
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const content = JSON.parse(atob(data.content));
+                    checkboxState = content;
+                    applyState();
+                    document.getElementById('syncStatus').textContent = `Synced (${new Date().toLocaleTimeString()})`;
+                }
+            } catch (e) {
+                document.getElementById('syncStatus').textContent = 'Sync failed';
+            }
+        }
 
-    if (!cfg.owner || !cfg.repo || !cfg.pat) {
-      resultEl.className = 'config-test-result error';
-      resultEl.textContent = 'Please fill in all fields.';
-      return;
-    }
+        async function saveState() {
+            if (!REPO || !TOKEN) return;
+            try {
+                // Get current SHA
+                const getResp = await fetch(`https://api.github.com/repos/${REPO}/contents/state/checkboxes.json`, {
+                    headers: { 'Authorization': `token ${TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+                });
+                let sha = '';
+                if (getResp.ok) {
+                    const data = await getResp.json();
+                    sha = data.sha;
+                }
+                // Put updated content
+                const body = {
+                    message: 'Update checkbox state',
+                    content: btoa(JSON.stringify(checkboxState, null, 2)),
+                };
+                if (sha) body.sha = sha;
+                await fetch(`https://api.github.com/repos/${REPO}/contents/state/checkboxes.json`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${TOKEN}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                document.getElementById('syncStatus').textContent = `Saved (${new Date().toLocaleTimeString()})`;
+            } catch (e) {
+                document.getElementById('syncStatus').textContent = 'Save failed';
+            }
+        }
 
-    resultEl.className = 'config-test-result';
-    resultEl.textContent = 'Testing...';
-    resultEl.style.display = 'block';
+        function applyState() {
+            for (const [id, checked] of Object.entries(checkboxState)) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.checked = checked;
+                    updateLabel(el);
+                }
+            }
+            updateProgress();
+        }
 
-    fetch('https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + FILE_PATH + '?ref=' + cfg.branch, {
-      headers: {
-        'Authorization': 'Bearer ' + cfg.pat,
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    }).then(function(resp) {
-      if (resp.status === 200) {
-        resultEl.className = 'config-test-result success';
-        resultEl.textContent = 'Connected successfully. File found.';
-      } else if (resp.status === 404) {
-        resultEl.className = 'config-test-result error';
-        resultEl.textContent = 'Repo/file not found. Make sure state/checkboxes.json exists in the repo.';
-      } else if (resp.status === 401 || resp.status === 403) {
-        resultEl.className = 'config-test-result error';
-        resultEl.textContent = 'Authentication failed. Check your PAT and permissions.';
-      } else {
-        resultEl.className = 'config-test-result error';
-        resultEl.textContent = 'Unexpected response: ' + resp.status;
-      }
-    }).catch(function(err) {
-      resultEl.className = 'config-test-result error';
-      resultEl.textContent = 'Network error: ' + err.message;
-    });
-  }
+        function updateLabel(checkbox) {
+            const label = checkbox.nextElementSibling;
+            if (label) {
+                label.classList.toggle('checked', checkbox.checked);
+            }
+        }
 
-  // --- Event Listeners ---
-  document.getElementById('settings-btn').addEventListener('click', function() {
-    showConfigModal(true);
-  });
+        function updateProgress() {
+            const all = document.querySelectorAll('input[type="checkbox"]');
+            const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+            const pct = all.length ? Math.round((checked.length / all.length) * 100) : 0;
+            document.getElementById('progressFill').style.width = pct + '%';
+            document.getElementById('progressText').textContent = `${checked.length}/${all.length} (${pct}%)`;
+        }
 
-  document.getElementById('btn-test').addEventListener('click', testConnection);
+        // Event listeners
+        document.addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox') {
+                checkboxState[e.target.id] = e.target.checked;
+                updateLabel(e.target);
+                updateProgress();
+                saveState();
+            }
+        });
 
-  document.getElementById('btn-cancel').addEventListener('click', hideConfigModal);
+        // Collapsible sections
+        function toggleSection(el) {
+            el.classList.toggle('open');
+            const content = el.nextElementSibling;
+            if (content) content.classList.toggle('open');
+        }
 
-  document.getElementById('btn-save-config').addEventListener('click', function() {
-    var cfg = getModalValues();
-    if (!cfg.owner || !cfg.repo || !cfg.pat) {
-      var resultEl = document.getElementById('config-test-result');
-      resultEl.className = 'config-test-result error';
-      resultEl.textContent = 'Owner, repo, and PAT are required.';
-      return;
-    }
-    saveConfig(cfg);
-    hideConfigModal();
-    fileSha = null;
-    setOfflineMode(false);
-    loadFromGitHub();
-  });
+        // Init
+        REPO = localStorage.getItem('tp_repo') || '';
+        TOKEN = localStorage.getItem('tp_token') || '';
+        if (REPO && TOKEN) {
+            loadState();
+        }
+        updateProgress();
 
-  // Close modal on overlay click
-  document.getElementById('config-overlay').addEventListener('click', function(e) {
-    if (e.target === this && document.getElementById('btn-cancel').style.display !== 'none') {
-      hideConfigModal();
-    }
-  });
-
-  checkboxes.forEach(function(cb) {
-    cb.addEventListener('change', function() {
-      updateProgress();
-      saveToLocalStorage();
-      scheduleSave();
-    });
-  });
-
-  // --- Initialize ---
-  updateProgress();
-  loadFromGitHub();
-})();
-</script>
-
+        // Open first unchecked phase by default
+        document.addEventListener('DOMContentLoaded', () => {
+            const phases = document.querySelectorAll('.collapsible');
+            for (const phase of phases) {
+                const content = phase.nextElementSibling;
+                if (content) {
+                    const checkboxes = content.querySelectorAll('input[type="checkbox"]');
+                    const allChecked = checkboxes.length > 0 && Array.from(checkboxes).every(cb => cb.checked);
+                    if (!allChecked) {
+                        phase.classList.add('open');
+                        content.classList.add('open');
+                        break;
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
